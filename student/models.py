@@ -5,6 +5,7 @@ from django.utils.crypto import get_random_string
 
 from django.db import models
 
+
 class Parent(models.Model):
     father_name = models.CharField(max_length=100)
     father_occupation = models.CharField(max_length=100, blank=True)
@@ -20,11 +21,13 @@ class Parent(models.Model):
     def __str__(self):
         return f"{self.father_name} & {self.mother_name}"
 
+
 class Student(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     student_id = models.CharField(max_length=20)
-    gender = models.CharField(max_length=10, choices=[('Male', 'Male'), ('Female', 'Female'), ('Others', 'Others')])
+    gender = models.CharField(max_length=10, choices=[(
+        'Male', 'Male'), ('Female', 'Female'), ('Others', 'Others')])
     date_of_birth = models.DateField()
     student_class = models.CharField(max_length=50)
     religion = models.CharField(max_length=50)
@@ -38,7 +41,13 @@ class Student(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(f"{self.first_name}-{self.last_name}-{self.student_id}")
+            base_slug = slugify(
+                f"{self.first_name}-{self.last_name}-{self.student_id}")
+            self.slug = base_slug
+            # Ensure uniqueness
+            while Student.objects.filter(slug=self.slug).exists():
+                self.slug = f"{base_slug}-{get_random_string(4)}"
         super(Student, self).save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.student_id})"
