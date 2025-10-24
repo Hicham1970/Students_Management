@@ -27,7 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'school',
-    'student', 
+    'student',
+    'home_auth'
 ]
 
 MIDDLEWARE = [
@@ -117,3 +118,33 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# add this for authentification:
+
+AUTH_USER_MODEL = 'home_auth.CustomUser'  # Custom user model
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # Default backend
+)
+
+
+# Use console email backend for local development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# settings.py for SMTP email backend (uncomment and configure for production)cad lors du deployement 
+
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'your-email@gmail.com'  # Replace with your email
+# EMAIL_HOST_PASSWORD = 'your-email-password'  # Replace with your email password or app-specific password
+
+
+# URL that handles the media served from MEDIA_ROOT
+MEDIA_URL = '/media/'
+
+# The file system path to the directory where media files will be stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
