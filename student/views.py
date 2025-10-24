@@ -63,7 +63,8 @@ def add_student(request):
             parent=parent
         )
         # create_notification(request.user, f"Added Student: {student.first_name} {student.last_name}")
-        messages.success(request, "Student added Successfully")
+        messages.success(
+            request, f"Student {student.first_name} {student.last_name} added Successfully")
         return redirect("student_list")
 
     return render(request, "students/add-student.html")
@@ -137,7 +138,7 @@ def edit_student(request, slug):
 
 
 def view_student(request, slug):
-    student = get_object_or_404(Student, student_id=slug)
+    student = get_object_or_404(Student, slug=slug)
     context = {
         'student': student
     }
