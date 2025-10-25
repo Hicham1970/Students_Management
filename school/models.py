@@ -16,7 +16,6 @@ class Notification(models.Model):
         return self.message
 
 
-
 class Course(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     name = models.CharField(max_length=100)
@@ -27,8 +26,7 @@ class Course(models.Model):
 
     def __str__(self):
         return self.name
-    
-    
+
 
 class Enrollment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -39,7 +37,3 @@ class Enrollment(models.Model):
 
     def __str__(self):
         return f"{self.student.username} enrolled in {self.course.name}"
-    
-    
-
-        
