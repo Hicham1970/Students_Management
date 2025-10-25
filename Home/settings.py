@@ -28,7 +28,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'school',
     'student',
-    'home_auth'
+    'home_auth',
+    'teachers'
 ]
 
 MIDDLEWARE = [
@@ -131,7 +132,7 @@ AUTHENTICATION_BACKENDS = (
 # Use console email backend for local development
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-# settings.py for SMTP email backend (uncomment and configure for production)cad lors du deployement 
+# settings.py for SMTP email backend (uncomment and configure for production)cad lors du deployement
 
 
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

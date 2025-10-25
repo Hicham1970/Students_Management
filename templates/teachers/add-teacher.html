@@ -1,0 +1,70 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Add Teacher</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'teacher_list' %}">Teachers</a></li>
+                        <li class="breadcrumb-item active">Add Teacher</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Le formulaire commence ici -->
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-12">
+                                    <h5 class="form-title"><span>Teacher Information</span></h5>
+                                </div>
+
+                                <!-- Affiche les erreurs générales du formulaire (non liées à un champ spécifique) -->
+                                {% if form.non_field_errors %}
+                                <div class="col-12">
+                                    <div class="alert alert-danger">
+                                        {% for error in form.non_field_errors %}
+                                        <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                <!-- Boucle sur chaque champ du formulaire pour l'afficher -->
+                                {% for field in form %}
+                                <div class="col-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label>{{ field.label }}</label>
+                                        {{ field }}
+                                        {% if field.help_text %}
+                                        <small class="form-text text-muted">{{ field.help_text }}</small>
+                                        {% endif %}
+                                        {% for error in field.errors %}
+                                        <div class="alert alert-danger mt-1">{{ error }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                        <!-- Fin du formulaire -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

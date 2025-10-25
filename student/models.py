@@ -1,9 +1,9 @@
 from django.db import models
 from django.utils.text import slugify
 from django.utils.crypto import get_random_string
-# Create your models here.
-
 from django.db import models
+
+
 
 
 class Parent(models.Model):
