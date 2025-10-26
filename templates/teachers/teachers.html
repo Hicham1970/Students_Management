@@ -29,11 +29,12 @@
                            <tr>
                               <th>ID</th>
                               <th>Name</th>
-                              <th>Class</th>
-                              <th>DOB</th>
-                              <th>Parent Name</th>
-                              <th>Mobile Number</th>
-                              <th>Address</th>
+                              <th>Gender</th>
+                              <th>Subject</th>
+                              <th>Mobil N°</th>
+                              <th>Email</th>
+                              <th>Hired On</th>
+
                               <th class="text-right">Action</th>
                            </tr>
                         </thead>
@@ -47,15 +48,17 @@
                                           class="avatar-img rounded-circle"
                                           src="{% if teacher.teacher_image %}{{ teacher.teacher_image.url }}{% else %}#{% endif %}"
                                           alt="User Image"></a>
-                                    <a href="{% url 'view_teacher' teacher.slug %}">{{ teacher.first_name }} {{
-                                       teacher.last_name }}</a>
+                                    <a href="{% url 'view_teacher' teacher.slug %}">{{ teacher.first_name }} </a>
                                  </h2>
                               </td>
-                              <td>{{ teacher.teacher_class }}</td>
-                              <td>{{ teacher.date_of_birth|date:"d M Y" }}</td>
-                              <td>{{ teacher.parent.father_name }} / {{ teacher.parent.mother_name }}</td>
-                              <td>{{ teacher.mobile_number }}</td>
-                              <td>{{ teacher.parent.present_address }}</td>
+                              <td>{{ teacher.gender }}</td>
+                              <td>{{ teacher.subject}}</td>
+                              <td>{{ teacher.mobil_number }}</td>
+
+                              <td>{{ teacher.teacher_email }}</td>
+                              <td>{{ teacher.hired_on }}</td>
+
+
                               <td class="text-right">
                                  <div class="actions">
                                     <a href="{% url 'edit_teacher' teacher.slug %}"

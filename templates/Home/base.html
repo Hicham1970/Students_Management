@@ -60,7 +60,7 @@
                               <div class="media">
                                  <span class="avatar avatar-sm">
                                     <img class="avatar-img rounded-circle" alt="User Image"
-                                       src="{% static 'assets/img/profiles/avatar-02.jpg' %}">
+                                       src="{% static 'assets/img/profiles/avatar-05.jpg' %}">
                                  </span>
                                  <div class="media-body">
                                     <p class="noti-details"><span class="noti-title">{{ notification.user.username
@@ -84,7 +84,7 @@
             <li class="nav-item dropdown has-arrow">
                <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                   <span class="user-img"><img class="rounded-circle"
-                        src="{% static 'assets/img/profiles/avatar-01.jpg' %}" width="31"
+                        src="{% static 'assets/img/profiles/avatar-03.jpg' %}" width="31"
                         alt="{{user.username}}"></span>
                </a>
                <div class="dropdown-menu">
@@ -127,9 +127,8 @@
                            class="menu-arrow"></span></a>
                      <ul>
                         <li><a href="{% url 'student_list' %}">Student List</a></li>
-                        <li><a href="student-details.html">Student View</a></li>
                         <li><a href="{% url 'add_student' %}">Student Add</a></li>
-                        <li><a href="edit-student.html">Student Edit</a></li>
+
                      </ul>
                   </li>
                   <li class="submenu">
@@ -137,9 +136,8 @@
                            class="menu-arrow"></span></a>
                      <ul>
                         <li><a href="{% url 'teacher_list' %}">Teacher List</a></li>
-                        <li><a href="teacher-details.html">Teacher View</a></li>
                         <li><a href="{% url 'add_teacher' %}">Teacher Add</a></li>
-                        <li><a href="edit-teacher.html">Teacher Edit</a></li>
+
                      </ul>
                   </li>
                   <li class="submenu">
