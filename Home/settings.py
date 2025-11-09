@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'school',
     'student',
     'home_auth',
-    'teachers'
+    'teachers',
+    'departments'
 ]
 
 MIDDLEWARE = [
