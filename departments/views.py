@@ -1,12 +1,16 @@
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
+
+from student.models import Student
 from .models import Department
 from teachers.models import Teacher  # Ajout pour récupérer Teacher
 from django.contrib import messages
 from school.models import Notification  # Assumer que c'est correct
 
+
 def create_notification(user, message):
     Notification.objects.create(user=user, message=message)
+
 
 def add_department(request):
     if request.method == "POST":
@@ -21,7 +25,12 @@ def add_department(request):
         # Validation basique
         if not dept_name:
             messages.error(request, "Le nom du département est requis.")
-            return redirect("add_department")
+            return redirect("add_department_dashboard")
+
+        # Check for unique dept_code
+        if dept_code and Department.objects.filter(dept_code=dept_code).exists():
+            messages.error(request, "Le code du département doit être unique.")
+            return redirect("add_department_dashboard")
 
         # Récupérer l'objet Teacher si fourni
         dept_head = None
@@ -30,7 +39,7 @@ def add_department(request):
                 dept_head = get_object_or_404(Teacher, id=dept_head_id)
             except:
                 messages.error(request, "Chef de département invalide.")
-                return redirect("add_department")
+                return redirect("add_department_dashboard")
 
         # Créer le département
         department = Department.objects.create(
@@ -43,24 +52,29 @@ def add_department(request):
             dept_email=dept_email
         )
 
-        create_notification(request.user, f"Added Department: {department.dept_name}")
-        messages.success(request, f"Department {department.dept_name} added Successfully")
+        create_notification(
+            request.user, f"Added Department: {department.dept_name}")
+        messages.success(
+            request, f"Department {department.dept_name} added Successfully")
         return redirect("department_list")
 
     # Pour GET, passer la liste des teachers pour le formulaire
     teachers = Teacher.objects.filter(is_active=True)  # Seulement les actifs
-    return render(request, "departments/add-department.html", {'teachers': teachers})  # Template corrigé
+    # Template corrigé
+    return render(request, "departments/add-department.html", {'teachers': teachers})
+
 
 def department_list(request):
-    departments = Department.objects.all()  # Corrigé
+    departments = Department.objects.all()
     context = {
-        'department_list': departments,  # Corrigé
+        'department_list': departments,
     }
     return render(request, "departments/departments.html", context)
 
-def edit_department(request, slug):  # Renommé
+
+def edit_department(request, slug):
     department = get_object_or_404(Department, slug=slug)
-    
+
     if request.method == "POST":
         dept_name = request.POST.get('dept_name')
         dept_code = request.POST.get('dept_code')
@@ -93,9 +107,11 @@ def edit_department(request, slug):  # Renommé
         department.dept_phone = dept_phone
         department.dept_email = dept_email
         department.save()
-        
-        create_notification(request.user, f"Edited Department: {department.dept_name}")
-        messages.success(request, f"Department {department.dept_name} updated successfully")
+
+        create_notification(
+            request.user, f"Edited Department: {department.dept_name}")
+        messages.success(
+            request, f"Department {department.dept_name} updated successfully")
         return redirect("department_list")
 
     # Pour GET, passer les données et la liste des teachers
@@ -105,6 +121,7 @@ def edit_department(request, slug):  # Renommé
         'teachers': teachers,
     })
 
+
 def view_department(request, slug):
     department = get_object_or_404(Department, slug=slug)
     context = {
@@ -112,12 +129,31 @@ def view_department(request, slug):
     }
     return render(request, "departments/department-details.html", context)
 
+
 def delete_department(request, slug):
     if request.method == "POST":
         department = get_object_or_404(Department, slug=slug)
         dept_name = department.dept_name
         department.delete()
         create_notification(request.user, f"Deleted Department: {dept_name}")
-        messages.success(request, f"Department {dept_name} deleted successfully")
+        messages.success(
+            request, f"Department {dept_name} deleted successfully")
         return redirect('department_list')
     return HttpResponseForbidden()
+
+
+def department_dashboard(request):
+    departments = Department.objects.all()
+    total_departments = Department.objects.count()
+    total_teachers = Teacher.objects.filter(is_active=True).count()
+    total_students = Student.objects.count() 
+    total_subjects = 0  # Placeholder, you can add Subject model count if available
+
+    context = {
+        'departments': departments,
+        'total_departments': total_departments,
+        'total_teachers': total_teachers,
+        'total_students': total_students,
+        'total_subjects': total_subjects,
+    }
+    return render(request, "departments/department-dashboard.html", context)
