@@ -1,0 +1,177 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h3 class="page-title">Department Details</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'department_list' %}">Departments</a></li>
+                        <li class="breadcrumb-item active">Department Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="about-info">
+                            <h4>Department Information</h4>
+                            <div class="media mt-3">
+                                <div class="media-body">
+                                    <ul>
+                                        <li>
+                                            <span class="title-span">Department Name : </span>
+                                            <span class="info-span">{{ department.dept_name }}</span>
+                                        </li>
+                                        {% if department.dept_code %}
+                                        <li>
+                                            <span class="title-span">Department Code : </span>
+                                            <span class="info-span">{{ department.dept_code }}</span>
+                                        </li>
+                                        {% endif %}
+                                        {% if department.dept_head %}
+                                        <li>
+                                            <span class="title-span">Head of Department : </span>
+                                            <span class="info-span">{{ department.dept_head.first_name }} {{ department.dept_head.last_name }}</span>
+                                        </li>
+                                        {% endif %}
+                                        {% if department.dept_location %}
+                                        <li>
+                                            <span class="title-span">Location : </span>
+                                            <span class="info-span">{{ department.dept_location }}</span>
+                                        </li>
+                                        {% endif %}
+                                        {% if department.dept_phone %}
+                                        <li>
+                                            <span class="title-span">Phone : </span>
+                                            <span class="info-span">{{ department.dept_phone }}</span>
+                                        </li>
+                                        {% endif %}
+                                        {% if department.dept_email %}
+                                        <li>
+                                            <span class="title-span">Email : </span>
+                                            <span class="info-span"><a href="mailto:{{ department.dept_email }}">{{ department.dept_email }}</a></span>
+                                        </li>
+                                        {% endif %}
+                                        <li>
+                                            <span class="title-span">Created : </span>
+                                            <span class="info-span">{{ department.created_at|date:"M d, Y" }}</span>
+                                        </li>
+                                        <li>
+                                            <span class="title-span">Last Updated : </span>
+                                            <span class="info-span">{{ department.updated_at|date:"M d, Y" }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            {% if department.dept_description %}
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <h5>Description</h5>
+                                    <p>{{ department.dept_description }}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <!-- Department Statistics -->
+                            <div class="row follow-sec">
+                                <div class="col-md-4 mb-3">
+                                    <div class="blue-box">
+                                        <h3>{{ department.teachers.count }}</h3>
+                                        <p>Teachers</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="blue-box">
+                                        <h3>{{ department.students.count }}</h3>
+                                        <p>Students</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="blue-box">
+                                        <h3>{{ department.subjects.count }}</h3>
+                                        <p>Subjects</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Department Head Information -->
+                            {% if department.dept_head %}
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <h5>Head of Department</h5>
+                                    <div class="media mt-3">
+                                        <div class="media-body">
+                                            <ul>
+                                                <li>
+                                                    <span class="title-span">Name : </span>
+                                                    <span class="info-span">{{ department.dept_head.first_name }} {{ department.dept_head.last_name }}</span>
+                                                </li>
+                                                {% if department.dept_head.email %}
+                                                <li>
+                                                    <span class="title-span">Email : </span>
+                                                    <span class="info-span"><a href="mailto:{{ department.dept_head.email }}">{{ department.dept_head.email }}</a></span>
+                                                </li>
+                                                {% endif %}
+                                                {% if department.dept_head.phone %}
+                                                <li>
+                                                    <span class="title-span">Phone : </span>
+                                                    <span class="info-span">{{ department.dept_head.phone }}</span>
+                                                </li>
+                                                {% endif %}
+                                                <li>
+                                                    <span class="title-span">Status : </span>
+                                                    <span class="info-span">
+                                                        {% if department.dept_head.is_active %}
+                                                            <span class="badge badge-success">Active</span>
+                                                        {% else %}
+                                                            <span class="badge badge-danger">Inactive</span>
+                                                        {% endif %}
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <!-- Action Buttons -->
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="btn-group">
+                                        <a href="{% url 'edit_department' department.slug %}" class="btn btn-primary">
+                                            <i class="fas fa-edit"></i> Edit Department
+                                        </a>
+                                        <a href="{% url 'department_list' %}" class="btn btn-secondary">
+                                            <i class="fas fa-arrow-left"></i> Back to List
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 GaroumH.</p>
+    </footer>
+</div>
+
+<script src="{% static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'assets/js/popper.min.js' %}"></script>
+<script src="{% static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'assets/js/script.js' %}"></script>
+
+{% endblock %}
