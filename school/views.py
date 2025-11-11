@@ -11,6 +11,17 @@ def index(request):
 
 
 def dashboard(request):
+    if request.user.is_staff or request.user.is_superuser:
+        return render(request, 'Home/dashboard-admin.html')
+    else:
+        return render(request, 'students/student-dashboard.html')
+
+
+def dashboard_admin(request):
+    return render(request, 'Home/dashboard-admin.html')
+
+
+def student_dashboard(request):
     return render(request, 'students/student-dashboard.html')
 
 

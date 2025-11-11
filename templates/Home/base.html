@@ -7,13 +7,13 @@
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
    <title>Preskool - Dashboard</title>
-   <link rel="shortcut icon" href="{%static 'assets/img/favicon.png' %}">
+   <link rel="shortcut icon" href="{% static 'assets/img/favicon.png' %}">
    <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,500;0,600;0,700;1,400&amp;display=swap">
-   <link rel="stylesheet" href="{%static 'assets/plugins/bootstrap/css/bootstrap.min.css' %}">
-   <link rel="stylesheet" href="{%static 'assets/plugins/fontawesome/css/fontawesome.min.css' %}">
-   <link rel="stylesheet" href="{%static 'assets/plugins/fontawesome/css/all.min.css' %}">
-   <link rel="stylesheet" href="{%static 'assets/css/style.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/plugins/bootstrap/css/bootstrap.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/fontawesome.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome/css/all.min.css' %}">
+   <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
 </head>
 
 <body>
@@ -117,10 +117,18 @@
                      <a href="#"><i class="fas fa-user-graduate"></i> <span> Dashboard</span> <span
                            class="menu-arrow"></span></a>
                      <ul>
-                        <li><a href="{% url 'dashboard' %}" class="active">Admin Dashboard</a></li>
-                        <li><a href="{% url 'department_dashboard' %}">Department Dashboard</a></li>
-                        <li><a href="{% url 'dashboard' %}">Teacher Dashboard</a></li>
-                        <li><a href="{% url 'dashboard' %}">Student Dashboard</a></li>
+                        <li class="{% if request.resolver_match.url_name == 'dashboard_admin' %}active{% endif %}">
+                           <a href="{% url 'dashboard_admin' %}">Admin Dashboard</a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'department_dashboard' %}active{% endif %}">
+                           <a href="{% url 'department_dashboard' %}">Department Dashboard</a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'teacher_dashboard' %}active{% endif %}">
+                           <a href="{% url 'teacher_dashboard' %}">Teacher Dashboard</a>
+                        </li>
+                        <li class="{% if request.resolver_match.url_name == 'student_dashboard' %}active{% endif %}">
+                           <a href="{% url 'student_dashboard' %}">Student Dashboard</a>
+                        </li>
                      </ul>
                   </li>
                   <li class="submenu">
@@ -150,14 +158,33 @@
                      </ul>
                   </li>
                   <li class="submenu">
-                     <a href="#"><i class="fas fa-book-reader"></i> <span> Subjects</span> <span
+                     <a href="#"><i class="fas fa-book-open "></i> <span> Subjects</span> <span
                            class="menu-arrow"></span></a>
                      <ul>
-                        <li><a href="subjects.html">Subject List</a></li>
-                        <li><a href="add-subject.html">Subject Add</a></li>
-                        <li><a href="edit-subject.html">Subject Edit</a></li>
+                        <li><a href="">Subjects List</a></li>
+                        <li><a href="">Subjects Add</a></li>
                      </ul>
                   </li>
+                  <li class="submenu">
+                     <a href="#"><i class="fas fa-newspaper"></i> <span> Notes</span> <span
+                           class="menu-arrow"></span></a>
+                     <ul>
+                        <li><a href="notes_list.html">Notes List</a></li>
+                        <li><a href="notes_comparaison.html">Notes Comparaison</a></li>
+                        <li><a href="notes_by_subject.html">Notes By Subject</a></li>
+                     </ul>
+                  </li>
+                  <li class="submenu">
+                     <a href="#"><i class="fas fa-book-reader"></i> <span> Inscription</span> <span
+                           class="menu-arrow"></span></a>
+                     <ul>
+                        <li><a href="inscription_list.html">Inscription List</a></li>
+                        <li><a href="inscription_comparaison.html">Inscription Comparaison</a></li>
+                        <li><a href="inscription_by_payment.html">Inscription By Payment</a></li>
+                     </ul>
+                  </li>
+
+
                   <li class="menu-title">
                      <span>Management</span>
                   </li>

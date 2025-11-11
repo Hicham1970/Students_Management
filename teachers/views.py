@@ -4,6 +4,8 @@ from .models import Teacher
 from django.contrib import messages
 from school.models import Notification
 from .forms import TeacherForm
+from departments.models import Department
+from student.models import Student
 # Create your views here.
 
 
@@ -65,3 +67,24 @@ def delete_teacher(request, slug):
         return redirect('teacher_list')
 
     return HttpResponseForbidden()
+
+
+def teacher_dashboard(request):
+    # Get statistics
+    total_departments = Department.objects.count()
+    total_teachers = Teacher.objects.count()
+    total_students = Student.objects.count()
+    total_subjects = 0  # Placeholder - you can add Subject model later
+
+    # Get recent departments (limit to 4 for dashboard display)
+    recent_departments = Department.objects.order_by('-created_at')[:4]
+
+    context = {
+        'total_departments': total_departments,
+        'total_teachers': total_teachers,
+        'total_students': total_students,
+        'total_subjects': total_subjects,
+        'recent_departments': recent_departments,
+    }
+
+    return render(request, "teachers/teacher-dashboard.html", context)
