@@ -53,14 +53,14 @@ def login_view(request):
 
             # Redirect user based on their role
             if user.is_admin:
-                return redirect('admin_dashboard')
+                return redirect('dashboard_admin')
             elif user.is_teacher:
                 return redirect('teacher_dashboard')
             elif user.is_student:
                 return redirect('dashboard')
             else:
-                messages.error(request, 'Invalid user role')
-                return redirect('index')  # Redirect to index in case of error
+                # If no specific role, redirect to general dashboard
+                return redirect('dashboard')
 
         else:
             messages.error(request, 'Invalid credentials')

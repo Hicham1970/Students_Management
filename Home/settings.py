@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-$x+ganyoy#^_dmbf1tngzar1+ai)gosz-g3$c56wsj7^dp4-xk
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'testserver']
 
 
 # Application definition
@@ -30,8 +30,16 @@ INSTALLED_APPS = [
     'student',
     'home_auth',
     'teachers',
-    'departments'
+    'departments',
+    'subjects'
 ]
+
+# Caching configuration
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -70,8 +78,12 @@ WSGI_APPLICATION = 'Home.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'schoolapp',
+        'USER': 'postgres',
+        'PASSWORD': 'sgs123456+++',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -151,3 +163,22 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+# e:\Dev\python_files\Django\School\Home\Home\settings.py
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        },
+    },
+}

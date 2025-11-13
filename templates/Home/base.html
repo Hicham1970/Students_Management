@@ -161,8 +161,8 @@
                      <a href="#"><i class="fas fa-book-open "></i> <span> Subjects</span> <span
                            class="menu-arrow"></span></a>
                      <ul>
-                        <li><a href="">Subjects List</a></li>
-                        <li><a href="">Subjects Add</a></li>
+                        <li><a href="{% url 'subjects' %}">Subjects List</a></li>
+                        <li><a href="{% url 'subject_create' %}">Subjects Add</a></li>
                      </ul>
                   </li>
                   <li class="submenu">
@@ -375,6 +375,9 @@
          }
       });
    </script>
+
+   {% block scripts %}
+   {% endblock %}
 
 
 </body>

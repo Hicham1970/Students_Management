@@ -35,6 +35,12 @@ class CustomUser(AbstractUser):
         blank=True
     )
 
+    def save(self, *args, **kwargs):
+        # Automatically set is_staff for admin users
+        if self.is_admin:
+            self.is_staff = True
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.username
 
