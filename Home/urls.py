@@ -12,7 +12,7 @@ urlpatterns = [
     path('accounts/', include('home_auth.urls')),
     path('departments/', include('departments.urls')),
     path('', include('subjects.urls')),
-    # path('notes/', include('notes.urls')),
+    path('notes/', include('notes.urls')),
     # path('inscriptions/', include('inscriptions.urls')),
 ]
 

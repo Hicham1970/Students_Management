@@ -1,0 +1,53 @@
+{% extends 'Home/base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="page-wrapper">
+    <div class="content container-fluid">
+        <div class="page-header">
+            <div class="row align-items-center">
+                <div class="col">
+                    <h3 class="page-title">Note Details</h3>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'notes' %}">Notes</a></li>
+                        <li class="breadcrumb-item active">Details</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Note for {{ note.st_id }}</h5>
+                        <p class="card-text"><strong>Subject:</strong> {{ note.id_sub }}</p>
+                        <p class="card-text"><strong>Evaluation Type:</strong> {{ note.id_type_eval }}</p>
+                        <p class="card-text"><strong>School Year:</strong> {{ note.scolar_year }}</p>
+                        <p class="card-text"><strong>Date:</strong> {{ note.date_note }}</p>
+                        <p class="card-text"><strong>Value:</strong> {{ note.value_note }}</p>
+                        <a href="{% url 'notes' %}" class="btn btn-secondary">Back to List</a>
+                        <a href="{% url 'note_update' note.id_note %}" class="btn btn-warning">Edit</a>
+                        <a href="{% url 'note_delete' note.id_note %}" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <p>Copyright © 2025 GaroumH.</p>
+    </footer>
+</div>
+</div>
+<script src="{%static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+<script src="{%static 'assets/js/popper.min.js' %}"></script>
+<script src="{%static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{%static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+<script src="{%static 'assets/js/script.js' %}"></script>
+</body>
+<!-- Mirrored from preschool.dreamguystech.com/html-template/students.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Oct 2021 11:11:49 GMT -->
+
+</html>
+
+
+{% endblock %}

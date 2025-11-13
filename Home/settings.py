@@ -31,7 +31,8 @@ INSTALLED_APPS = [
     'home_auth',
     'teachers',
     'departments',
-    'subjects'
+    'subjects',
+    'notes'
 ]
 
 # Caching configuration
