@@ -3,6 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Subject, Formation
 from .forms import SubjectForm, FormationForm
+from notes.models import Note
+from django.db.models import F, ExpressionWrapper, FloatField
 
 
 @login_required
@@ -109,3 +111,16 @@ def formation_delete(request, pk):
         messages.success(request, 'Formation deleted successfully!')
         return redirect('formations')
     return render(request, 'subjects/formation_confirm_delete.html', {'formation': formation})
+
+
+@login_required
+def formation_notes_comparison(request):
+    """Display notes comparison for formations"""
+    notes = Note.objects.select_related(
+        'st_id__user', 'id_sub', 'id_type_eval').annotate(
+        weighted_note=ExpressionWrapper(
+            F('value_note') * F('id_sub__coef_sub'),
+            output_field=FloatField()
+        )
+    ).order_by('-date_note')
+    return render(request, 'notes/notes-comparaisons.html', {'notes': notes, 'title': 'Notes Comparison for Formations'})

@@ -42,7 +42,7 @@ class Note(models.Model):
     )
 
     # Date and time of the note
-    date_note = models.DateTimeField(db_column='date_note')
+    date_note = models.DateTimeField(db_column='date_note', db_index=True)
 
     # Value of the note (NUMERIC, mapped to DecimalField)
     value_note = models.DecimalField(

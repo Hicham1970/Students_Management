@@ -13,6 +13,8 @@ urlpatterns = [
          name='subject_delete'),  # Suppression d'un sujet
     # Liste des formations
     path('formations/', formation_list, name='formations'),
+    path('formations/notes_comparaison.html',
+         formation_notes_comparison, name='formation_notes_comparison'),
     path('formation/create/', formation_create,
          name='formation_create'),  # Création d'une formation
     path('formation/<int:pk>/update/', formation_update,

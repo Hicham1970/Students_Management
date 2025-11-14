@@ -4,8 +4,6 @@ from django.utils.crypto import get_random_string
 from django.db import models
 
 
-
-
 class Parent(models.Model):
     father_name = models.CharField(max_length=100)
     father_occupation = models.CharField(max_length=100, blank=True)
@@ -23,11 +21,13 @@ class Parent(models.Model):
 
 
 class Student(models.Model):
+    user = models.OneToOneField(
+        'home_auth.CustomUser', on_delete=models.CASCADE, null=True, blank=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     student_id = models.CharField(max_length=20)
     gender = models.CharField(max_length=10, choices=[(
-        'Male', 'Male'), ('Female', 'Female'), ('Others', 'Others')])
+        'Male', 'Male'), ('Female', 'Female'), ('Others', 'Others')], db_index=True)
     date_of_birth = models.DateField()
     student_class = models.CharField(max_length=50)
     religion = models.CharField(max_length=50)
@@ -38,6 +38,12 @@ class Student(models.Model):
     student_image = models.ImageField(upload_to='students/', blank=True)
     parent = models.OneToOneField(Parent, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['first_name', 'last_name'],
+                         name='indx_first_last_name_student'),
+        ]
 
     def save(self, *args, **kwargs):
         if not self.slug:

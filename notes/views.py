@@ -2,8 +2,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.db.models import F, ExpressionWrapper, FloatField
 from .models import Note
 from .forms import NoteForm
+from student.models import Student
 
 
 @login_required
@@ -62,3 +64,33 @@ def note_delete(request, id_note):
         messages.success(request, 'Note deleted successfully!')
         return redirect('notes')
     return render(request, 'notes/note_confirm_delete.html', {'note': note})
+
+
+@login_required
+def notes_2021(request):
+    """Display notes from the year 2021"""
+    notes = Note.objects.filter(scolar_year=2021).select_related(
+        'st_id__user', 'id_sub', 'id_type_eval').order_by('-date_note')
+    return render(request, 'notes/notes-comparaisons.html', {'notes': notes, 'title': 'Notes for 2021'})
+
+
+@login_required
+def notes_by_student(request, student_id):
+    """Display all notes for a specific student"""
+    student = get_object_or_404(Student, id=student_id)
+    notes = Note.objects.filter(st_id=student).select_related(
+        'st_id__user', 'id_sub', 'id_type_eval').order_by('-date_note')
+    return render(request, 'notes/notes-comparaisons.html', {'notes': notes, 'student': student, 'title': f'Notes for {student}'})
+
+
+@login_required
+def notes_comparison(request):
+    """Display notes comparison for all notes"""
+    notes = Note.objects.select_related(
+        'st_id__user', 'id_sub', 'id_type_eval').annotate(
+        weighted_note=ExpressionWrapper(
+            F('value_note') * F('id_sub__coef_sub'),
+            output_field=FloatField()
+        )
+    ).order_by('-date_note')
+    return render(request, 'notes/notes-comparaisons.html', {'notes': notes, 'title': 'Notes Comparison'})

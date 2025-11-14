@@ -6,7 +6,7 @@ from teachers.models import Teacher
 # Create your models here.
 class TbTypeSubject(models.Model):
     id_type_sub = models.AutoField(primary_key=True)
-    name_type_sub = models.CharField(max_length=150)
+    name_type_sub = models.CharField(max_length=150, db_index=True)
 
     class Meta:
         db_table = 'tb_type_subject'
@@ -17,7 +17,7 @@ class TbTypeSubject(models.Model):
 
 class Subject(models.Model):
     id_sub = models.AutoField(primary_key=True)
-    name_sub = models.CharField(max_length=100)
+    name_sub = models.CharField(max_length=100, db_index=True)
     # Adjust max_digits and decimal_places as needed
     coef_sub = models.DecimalField(max_digits=10, decimal_places=2)
     id_type_sub = models.ForeignKey(TbTypeSubject, on_delete=models.CASCADE)
@@ -30,7 +30,7 @@ class Subject(models.Model):
 
 class TbTypeEvaluation(models.Model):
     id_type_eval = models.AutoField(primary_key=True)
-    name_type_eval = models.CharField(max_length=150)
+    name_type_eval = models.CharField(max_length=150, db_index=True)
 
     class Meta:
         db_table = 'tb_type_evaluation'
