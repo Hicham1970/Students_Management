@@ -72,31 +72,40 @@
             var canvas = document.getElementById('notesChart');
             if (canvas) {
                 var ctx = canvas.getContext('2d');
-                var notesData = [{% for note in notes %} { { note.value_note } } {% if not forloop.last %}, {% endif %} {% endfor %}];
-            var notesData = [{% for note in notes %}{{ note.value_note }}{% if not forloop.last %}, {% endif %} {% endfor %}];
-        var labels = [{% for note in notes %}'{{ note.id_sub.name_sub }}'{% if not forloop.last %}, {% endif %} {% endfor %}];
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Notes',
-                    data: notesData,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+                var notesData = [{% for note in notes %}{{ note.value_note }},{% endfor %}];
+                var labels = [{% for note in notes %}'{{ note.st_id.user.first_name }} - {{ note.id_sub.name_sub }}',{% endfor %}];
+                var chart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Notes',
+                            data: notesData,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
                     }
                 }
+                });
             }
         });
-        }
-    });
     </script>
+    <script src="{%static 'assets/js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{%static 'assets/js/popper.min.js' %}"></script>
+    <script src="{%static 'assets/plugins/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{%static 'assets/plugins/slimscroll/jquery.slimscroll.min.js' %}"></script>
+    <script src="{%static 'assets/js/script.js' %}"></script>
+    </body>
+    <!-- Mirrored from preschool.dreamguystech.com/html-template/students.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 28 Oct 2021 11:11:49 GMT -->
+    
+    </html>
 </div>
 {% endblock %}
