@@ -1,6 +1,9 @@
 import os
 import dj_database_url
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -84,7 +87,7 @@ DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=os.environ.get('DATABASE_SSL_REQUIRE', 'False') == 'True'
     )
 }
 
@@ -149,12 +152,12 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # settings.py for SMTP email backend (uncomment and configure for production)cad lors du deployement
 
 
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.gmail.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'your-email@gmail.com'  # Replace with your email
-# EMAIL_HOST_PASSWORD = 'your-email-password'  # Replace with your email password or app-specific password
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'h.garoum@gmail.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')  # Replace with your email password or app-specific password
 
 
 # URL that handles the media served from MEDIA_ROOT
