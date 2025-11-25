@@ -46,7 +46,12 @@ def login_view(request):
         email = request.POST['email']
         password = request.POST['password']
 
-        user = authenticate(request, username=email, password=password)
+        try:
+            user_obj = CustomUser.objects.get(email=email)
+            user = authenticate(request, username=user_obj.username, password=password)
+        except CustomUser.DoesNotExist:
+            user = None
+            
         if user is not None:
             login(request, user)
             messages.success(request, 'Login successful!')
